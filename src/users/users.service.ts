@@ -25,6 +25,7 @@ export class UsersService {
     if (userExists) throw new BadRequestException('Email is not available.');
     userSignUpDto.password = await hash(userSignUpDto.password, 10);
     let user = this.usersRepository.create(userSignUpDto);
+    console.log('New user created:', user);
     user = await this.usersRepository.save(user);
     delete user.password;
     return user;
@@ -73,10 +74,12 @@ export class UsersService {
   }
 
   async accessToken(user: UserEntity): Promise<string> {
-    return sign(
+    const token = sign(
       { id: user.id, email: user.email },
       process.env.ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME },
     );
+    console.log('Access token generated for user:', token);
+    return token;
   }
 }

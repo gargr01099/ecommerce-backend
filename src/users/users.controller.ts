@@ -38,14 +38,16 @@ export class UsersController {
   }> {
     const user = await this.usersService.signin(userSignInDto);
     const accessToken = await this.usersService.accessToken(user);
-
+   console.log(accessToken);
+   console.log(user);  
     return { accessToken, user };
   }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    //return this.usersService.create(createUserDto);
-    return 'hi';
+    console.log(createUserDto);
+    return this.usersService.create(createUserDto);
+    // return 'hiiiiiiiii';
   }
 
   //@AuthorizeRoles(Roles.ADMIN)
@@ -73,6 +75,7 @@ export class UsersController {
   @UseGuards(AuthenticationGuard)
   @Get('me')
   getProfile(@CurrentUser() currentUser: UserEntity) {
+    console.log('currentUser', currentUser);
     return currentUser;
   }
 }
