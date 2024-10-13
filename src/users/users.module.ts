@@ -10,4 +10,8 @@ import { UserEntity } from './entities/user.entity';
   providers: [UsersService],
   exports: [UsersService],
 })
-export class UsersModule {}
+export class UsersModule {
+  constructor(){
+    console.log('UsersModule')
+  }
+}

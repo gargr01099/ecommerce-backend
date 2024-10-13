@@ -28,6 +28,7 @@ export class UsersController {
   async signup(
     @Body() userSignUpDto: UserSignUpDto,
   ): Promise<{ user: UserEntity }> {
+    console.log(userSignUpDto);
     return { user: await this.usersService.signup(userSignUpDto) };
   }
 

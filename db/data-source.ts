@@ -11,11 +11,10 @@ export const dataSourceOptions: DataSourceOptions = {
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/db/migrations/*{.ts,.js}'],
   logging: false,
-  synchronize: false,
+  synchronize: true,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
-console.log(dataSource,"dataSource");
 console.log('DB connected');
 dataSource.initialize();
 export default dataSource;
