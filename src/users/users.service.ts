@@ -23,9 +23,9 @@ export class UsersService {
   async signup(userSignUpDto: UserSignUpDto): Promise<UserEntity> {
     try{
     const userExists = await this.findUserByEmail(userSignUpDto.email);
-    if (userExists) throw new BadRequestException('Email is not available.');
+    if (userExists) throw new BadRequestException('Email alreadyy exists.');
     userSignUpDto.password = await hash(userSignUpDto.password, 10);
-    let user = await this.usersRepository.create(userSignUpDto);
+    let user = this.usersRepository.create(userSignUpDto);
     console.log('New user created:', user);
     user = await this.usersRepository.save(user);
     delete user.password;
