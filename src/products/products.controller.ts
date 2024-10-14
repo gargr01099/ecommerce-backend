@@ -65,6 +65,7 @@ export class ProductsController {
     );
   }
 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id);
