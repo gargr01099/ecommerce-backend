@@ -18,11 +18,12 @@ export class ReviewsService {
     createReviewDto: CreateReviewDto,
     currentUser: UserEntity,
   ): Promise<ReviewEntity> {
+      console.log('Current User:', currentUser);
     const product = await this.productService.findOne(
       createReviewDto.productId,
     );
-    console.log('Current User:', currentUser); // Add this line to check currentUser
     let review = await this.findOneByUserAndProduct(
+      currentUser.id,
       createReviewDto.productId,
     );
     if (!review) {
@@ -76,9 +77,12 @@ export class ReviewsService {
     return this.reviewRepository.remove(review);
   }
 
-  async findOneByUserAndProduct(productId: number) {
+  async findOneByUserAndProduct(userId: number, productId: number) {
     return await this.reviewRepository.findOne({
       where: {
+        user: {
+          id: userId,
+        },
         product: {
           id: productId,
         },

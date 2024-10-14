@@ -22,6 +22,7 @@ import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Post()
   async create(
     @Body() createReviewDto: CreateReviewDto,
@@ -45,11 +46,13 @@ export class ReviewsController {
     return await this.reviewsService.findOne(+id);
   }
 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewsService.update(+id, updateReviewDto);
   }
 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.reviewsService.remove(+id);
