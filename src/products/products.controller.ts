@@ -35,6 +35,8 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @CurrentUser() currentUser: UserEntity,
   ): Promise<ProductEntity> {
+    console.log(currentUser);
+    console.log(createProductDto);
     return await this.productsService.create(createProductDto, currentUser);
   }
 

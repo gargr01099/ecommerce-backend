@@ -12,6 +12,7 @@ import { UserSignUpDto } from './dto/user-signup.dto';
 import { hash, compare } from 'bcrypt';
 import { UserSignInDto } from './dto/user-signin.dto';
 import { sign } from 'jsonwebtoken';
+import { Roles } from 'src/utility/common/user-roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -25,13 +26,16 @@ export class UsersService {
     const userExists = await this.findUserByEmail(userSignUpDto.email);
     if (userExists) throw new BadRequestException('Email alreadyy exists.');
     userSignUpDto.password = await hash(userSignUpDto.password, 10);
-    let user = this.usersRepository.create(userSignUpDto);
-    console.log('New user created:', user);
+     // If roles are not provided, set to default [Roles.USER]
+     const roles = userSignUpDto.roles || [Roles.USER];
+    let user = this.usersRepository.create({...userSignUpDto, roles});  
+    console.log('New user created with roles:', user);
     user = await this.usersRepository.save(user);
     delete user.password;
     return user;
   }catch(error){
   console.log(error); 
+  throw new BadRequestException('An error occurred during sign up.');
 }
   }
 
@@ -79,11 +83,11 @@ export class UsersService {
 
   async accessToken(user: UserEntity): Promise<string> {
     const token = sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, roles: user.roles },
       process.env.ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME },
     );
-    console.log('Access token generated for user:', token);
+    console.log('Access token generated for user:', token, user.roles);
     return token;
   }
 }
