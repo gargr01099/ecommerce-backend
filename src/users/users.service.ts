@@ -25,30 +25,35 @@ export class UsersService {
     try {
       // Check if the user already exists
       const userExists = await this.findUserByEmail(userSignUpDto.email);
-      if (userExists) throw new BadRequestException('Email already exists.');
-  
+      if (userExists)
+        throw new BadRequestException(
+          'Email already exists. Please use a different email address.',
+        );
+
       // Hash the password
       userSignUpDto.password = await hash(userSignUpDto.password, 10);
-  
+
       // Use the provided role from the DTO
       const role = userSignUpDto.role; // Change from roles to role
-  
+
       // Create a new user entity with the provided data
       let user = this.usersRepository.create({
         ...userSignUpDto, // Spread the DTO properties
         role, // Include the role directly
       });
-  
+
       console.log('New user created with role:', role); // Update the log message to indicate single role
       user = await this.usersRepository.save(user);
       delete user.password; // Remove password from the returned user object
       return user;
     } catch (error) {
-      console.log(error);
-      throw new BadRequestException('An error occurred during sign up.');
+      if (error instanceof BadRequestException) {
+        throw error; // Re-throw specific BadRequestExceptions
+      }
+      console.error('Signup error:', error);
+      throw new BadRequestException('An unexpected error occurred during sign up. Please try again later.');
     }
   }
-  
 
   async signin(userSignInDto: UserSignInDto): Promise<UserEntity> {
     const userExists = await this.usersRepository
