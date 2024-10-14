@@ -24,8 +24,8 @@ export class UserEntity {
   email: string;
   @Column({ select: false })
   password: string;
-  @Column({ type: 'enum', enum: Roles, array: true, default: [Roles.USER] })
-  roles: Roles[];
+  @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' }) // Ensure the role is defined
+  role: 'user' | 'admin'; 
   @CreateDateColumn()
   createdAt: Timestamp;
   @UpdateDateColumn()

@@ -22,22 +22,33 @@ export class UsersService {
   ) {}
 
   async signup(userSignUpDto: UserSignUpDto): Promise<UserEntity> {
-    try{
-    const userExists = await this.findUserByEmail(userSignUpDto.email);
-    if (userExists) throw new BadRequestException('Email alreadyy exists.');
-    userSignUpDto.password = await hash(userSignUpDto.password, 10);
-     // If roles are not provided, set to default [Roles.USER]
-     const roles = userSignUpDto.roles || [Roles.USER];
-    let user = this.usersRepository.create({...userSignUpDto, roles});  
-    console.log('New user created with roles:', user);
-    user = await this.usersRepository.save(user);
-    delete user.password;
-    return user;
-  }catch(error){
-  console.log(error); 
-  throw new BadRequestException('An error occurred during sign up.');
-}
+    try {
+      // Check if the user already exists
+      const userExists = await this.findUserByEmail(userSignUpDto.email);
+      if (userExists) throw new BadRequestException('Email already exists.');
+  
+      // Hash the password
+      userSignUpDto.password = await hash(userSignUpDto.password, 10);
+  
+      // Use the provided role from the DTO
+      const role = userSignUpDto.role; // Change from roles to role
+  
+      // Create a new user entity with the provided data
+      let user = this.usersRepository.create({
+        ...userSignUpDto, // Spread the DTO properties
+        role, // Include the role directly
+      });
+  
+      console.log('New user created with role:', role); // Update the log message to indicate single role
+      user = await this.usersRepository.save(user);
+      delete user.password; // Remove password from the returned user object
+      return user;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('An error occurred during sign up.');
+    }
   }
+  
 
   async signin(userSignInDto: UserSignInDto): Promise<UserEntity> {
     const userExists = await this.usersRepository
@@ -83,11 +94,11 @@ export class UsersService {
 
   async accessToken(user: UserEntity): Promise<string> {
     const token = sign(
-      { id: user.id, email: user.email, roles: user.roles },
+      { id: user.id, email: user.email, roles: user.role },
       process.env.ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME },
     );
-    console.log('Access token generated for user:', token, user.roles);
+    console.log('Access token generated for user:', token, user.role);
     return token;
   }
 }

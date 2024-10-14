@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength,IsIn } from "class-validator";
 import { UserSignInDto } from "./user-signin.dto";
 import {Roles} from "../../utility/common/user-roles.enum"; 
 
@@ -15,6 +15,7 @@ export class UserSignUpDto extends UserSignInDto{
     @MinLength(8,{message:'Password should be atleast 8 characters long'})
     password:string;
 
-    @IsOptional()
-    roles?:Roles[];
+    @IsNotEmpty({ message: 'Role cannot be null' })
+    @IsIn(['user', 'admin'], { message: 'Role must be either user or admin' })
+    role: 'user' | 'admin'; // Change to a single string representing the role
 }

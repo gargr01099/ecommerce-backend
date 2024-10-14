@@ -1,35 +1,46 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, mixin } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { Observable } from "rxjs";
 
 /* @Injectable()
-export class AuthorizeGuard implements CanActivate{
-    
-    constructor(private reflector:Reflector){}
+export class AuthorizeGuard implements CanActivate {
+    constructor(private reflector: Reflector) {}
 
-    canActivate(context: ExecutionContext): boolean{
-        const allowedRoles=this.reflector.get<string[]>('allowedRoles',context.getHandler());
-        const request=context.switchToHttp().getRequest();
-        const result=request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).find((val:boolean)=>val===true);
-        if(result) return true;
-        throw new UnauthorizedException('Sorry, you are not authorized.')
+    canActivate(context: ExecutionContext): boolean {
+        const allowedRoles = this.reflector.get<string[]>('allowedRoles', context.getHandler());
+        const request = context.switchToHttp().getRequest();
+        const currentUser = request.currentUser;
+
+        // Log for debugging
+        console.log('AuthorizeGuard - allowedRoles:', allowedRoles);
+        console.log('AuthorizeGuard - currentUser:', currentUser);
+        console.log('AuthorizeGuard - user role:', currentUser?.role);
+        
+        if (currentUser && allowedRoles.includes(currentUser.role)) {
+            return true;
+        }
+        
+        throw new UnauthorizedException('Sorry, you are not authorized.');
     }
 } */
-export const AuthorizeGuard = (allowedRoles:string[])=>{
-    class RolesGuardMixin implements CanActivate{
-        canActivate(context: ExecutionContext): boolean{
-            const request=context.switchToHttp().getRequest();
-            console.log('AuthorizeGuard - allowedRoles:', allowedRoles);
-            console.log('AuthorizeGuard - currentUser:', request.currentUser);
-            console.log('AuthorizeGuard - user roles:', request.currentUser?.roles);
-            const result=request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).find((val:boolean)=>val===true);
-            console.log('AuthorizeGuard - authorization result:', result);
+export const AuthorizeGuard = (allowedRoles: string[]) => {
+    class RolesGuardMixin implements CanActivate {
+        canActivate(context: ExecutionContext): boolean {
+            const request = context.switchToHttp().getRequest();
+            const currentUser = request.currentUser;
 
-            if(result) return true;
-            throw new UnauthorizedException('Sorry, you are not authorized.')  
+            console.log('AuthorizeGuard - allowedRoles:', allowedRoles);
+            console.log('AuthorizeGuard - currentUser:', currentUser);
+            console.log('AuthorizeGuard - user role:', currentUser?.role);
+
+            // Check if the current user's role is in the allowed roles
+            if (currentUser && allowedRoles.includes(currentUser.role)) {
+                return true;
+            }
+
+            throw new UnauthorizedException('Sorry, you are not authorized.');
         }
     }
-    const guard=mixin(RolesGuardMixin);
+
+    const guard = mixin(RolesGuardMixin);
     return guard;
 }
-
