@@ -65,6 +65,7 @@ export class OrdersService {
       product: ProductEntity;
       product_quantity: number;
       product_unit_price: number;
+      purchased:boolean;
     }[] = [];
 
     for (let i = 0; i < createOrderDto.orderedProducts.length; i++) {
@@ -81,6 +82,7 @@ export class OrdersService {
         product,
         product_quantity,
         product_unit_price,
+        purchased:true,
       });
     }
 
@@ -105,7 +107,7 @@ export class OrdersService {
   }
 
   async findOne(id: number): Promise<OrderEntity> {
-    return await this.orderRepository.findOne({
+    const order = await this.orderRepository.findOne({
       where: { id },
       relations: {
         shippingAddress: true,
@@ -113,6 +115,18 @@ export class OrdersService {
         products: { product: true },
       },
     });
+    if(!order) throw new NotFoundException('Order not found');
+    return {
+      ...order,
+      products: order.products.map((op) => ({
+        id: op.id,
+        product_unit_price: op.product_unit_price,
+        order: op.order, 
+        product_quantity: op.product_quantity,
+        product: op.product,
+        purchased: op.purchased, // Include the purchased field here
+      })),
+    };
   }
 
   async findOneByProductId(id: number) {

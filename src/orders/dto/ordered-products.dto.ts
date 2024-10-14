@@ -14,4 +14,5 @@ export class OrderedProductsDto {
   @IsNumber({}, { message: 'Quantity should be number' })
   @IsPositive({ message: 'Quantity can not be Negative.' })
   product_quantity: number;
+
 }

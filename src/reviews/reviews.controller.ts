@@ -22,7 +22,6 @@ import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
-  @UseGuards(AuthenticationGuard)
   @Post()
   async create(
     @Body() createReviewDto: CreateReviewDto,
@@ -51,7 +50,6 @@ export class ReviewsController {
     return this.reviewsService.update(+id, updateReviewDto);
   }
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.reviewsService.remove(+id);

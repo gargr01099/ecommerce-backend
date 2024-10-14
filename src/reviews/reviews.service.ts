@@ -21,6 +21,7 @@ export class ReviewsService {
     const product = await this.productService.findOne(
       createReviewDto.productId,
     );
+    console.log('Current User:', currentUser); // Add this line to check currentUser
     let review = await this.findOneByUserAndProduct(
       currentUser.id,
       createReviewDto.productId,
