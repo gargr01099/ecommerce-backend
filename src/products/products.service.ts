@@ -28,15 +28,10 @@ export class ProductsService {
 
   async create(
     createProductDto: CreateProductDto,
-    currentUser: UserEntity,
+    user: UserEntity,
   ): Promise<ProductEntity> {
-    const category = await this.categoryService.findOne(
-      +createProductDto.categoryId,
-    );
     const product = this.productRepository.create(createProductDto);
-
-    product.category = category;
-    product.addedBy = currentUser;
+    product.addedBy = user;
 
     return await this.productRepository.save(product);
   }
@@ -142,13 +137,6 @@ export class ProductsService {
     const product = await this.findOne(id);
     Object.assign(product, updateProductDto);
     product.addedBy = currentUser;
-    if (updateProductDto.categoryId) {
-      const category = await this.categoryService.findOne(
-        +updateProductDto.categoryId,
-      );
-      product.category = category;
-    }
-
     return await this.productRepository.save(product);
   }
 

@@ -50,4 +50,5 @@ export class ProductEntity {
 
   @OneToMany(() => OrdersProductsEntity, (op) => op.product)
   products: OrdersProductsEntity[];
+
 }
