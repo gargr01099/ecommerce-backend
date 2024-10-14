@@ -23,7 +23,6 @@ export class ReviewsService {
     );
     console.log('Current User:', currentUser); // Add this line to check currentUser
     let review = await this.findOneByUserAndProduct(
-      currentUser.id,
       createReviewDto.productId,
     );
     if (!review) {
@@ -77,12 +76,9 @@ export class ReviewsService {
     return this.reviewRepository.remove(review);
   }
 
-  async findOneByUserAndProduct(userId: number, productId: number) {
+  async findOneByUserAndProduct(productId: number) {
     return await this.reviewRepository.findOne({
       where: {
-        user: {
-          id: userId,
-        },
         product: {
           id: productId,
         },
