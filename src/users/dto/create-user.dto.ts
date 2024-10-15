@@ -13,10 +13,12 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
-  address: string;
+  @IsOptional()
+  address?: string;
 
-  @IsString()   
-  phone: string;
+  @IsString() 
+  @IsOptional()  
+  phone?: string;
 
   @IsOptional()
   @IsEnum(['user', 'admin'], { message: 'Role must be either user or admin' })

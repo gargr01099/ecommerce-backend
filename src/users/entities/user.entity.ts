@@ -26,6 +26,13 @@ export class UserEntity {
   password: string;
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' }) // Ensure the role is defined
   role: 'user' | 'admin'; 
+  
+  @Column({ nullable: true })
+  address?: string;
+
+  @Column({ nullable: true })
+  phone?: string;
+
   @CreateDateColumn()
   createdAt: Timestamp;
   @UpdateDateColumn()
