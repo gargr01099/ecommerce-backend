@@ -64,7 +64,6 @@ export class OrdersService {
       order: OrderEntity;
       product: ProductEntity;
       product_quantity: number;
-      product_unit_price: number;
       purchased:boolean;
     }[] = [];
 
@@ -75,13 +74,10 @@ export class OrdersService {
       );
       const product_quantity =
         createOrderDto.orderedProducts[i].product_quantity;
-      const product_unit_price =
-        createOrderDto.orderedProducts[i].product_unit_price;
       opEntity.push({
         order,
         product,
         product_quantity,
-        product_unit_price,
         purchased:true,
       });
     }
@@ -120,7 +116,7 @@ export class OrdersService {
       ...order,
       products: order.products.map((op) => ({
         id: op.id,
-        product_unit_price: op.product_unit_price,
+        // product_unit_price: op.product_unit_price,
         order: op.order, 
         product_quantity: op.product_quantity,
         product: op.product,
