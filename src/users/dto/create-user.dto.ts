@@ -12,6 +12,12 @@ export class CreateUserDto {
   @MinLength(6)
   password: string;
 
+  @IsString()
+  address: string;
+
+  @IsString()   
+  phone: string;
+
   @IsOptional()
   @IsEnum(['user', 'admin'], { message: 'Role must be either user or admin' })
   role?: 'user' | 'admin';
