@@ -2,6 +2,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   Min,
@@ -29,8 +30,9 @@ export class CreateProductDto {
   @Min(0, { message: 'stock can not be negative.' })
   stock: number;
 
-  @IsNotEmpty({ message: 'images should not be empty.' })
-  @IsArray({ message: 'images should be in array format.' })
-  images: string[];
+
+  // @IsOptional()
+  // @IsArray({ message: 'images should be in array format.' })
+  // images: string[];
 
 }

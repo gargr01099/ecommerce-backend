@@ -30,10 +30,10 @@ export class ProductEntity {
 
   @Column()
   stock: number;
-  
-  @IsOptional()
-  @Column('simple-array')
-  images: string[];
+
+  // @IsOptional()
+  // @Column('simple-array')
+  // images: string[];
 
   @CreateDateColumn()
   createdAt: Timestamp;
