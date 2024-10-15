@@ -21,6 +21,8 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
+  
+
   async signup(userSignUpDto: UserSignUpDto): Promise<UserEntity> {
     try {
       // Check if the user already exists
@@ -85,8 +87,18 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
+    // Find the user by ID
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    // Merge the user entity with the updated data
+    Object.assign(user, updateUserDto);
+
+    // Save the updated user to the database
+    return this.usersRepository.save(user); // Corrected here
   }
 
   remove(id: number) {

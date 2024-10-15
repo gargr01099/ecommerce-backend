@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
@@ -29,7 +30,8 @@ export class ProductEntity {
 
   @Column()
   stock: number;
-
+  
+  @IsOptional()
   @Column('simple-array')
   images: string[];
 
