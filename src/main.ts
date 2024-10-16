@@ -1,13 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import * as cors from 'cors'; 
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({whitelist:true}));
-  app.setGlobalPrefix('api/v1');
-  app.use(cors());
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
+  app.setGlobalPrefix('api/');
+  app.enableCors();
   await app.listen(3001);
 }
 bootstrap();

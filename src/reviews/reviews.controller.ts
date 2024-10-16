@@ -22,7 +22,7 @@ import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
+  // @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Post()
   async create(
     @Body() createReviewDto: CreateReviewDto,
