@@ -5,10 +5,10 @@ import {
   NotFoundException,
   forwardRef,
 } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto } from 'src/products/dto/create-product.dto';
+import { UpdateProductDto } from 'src/products/dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductEntity } from './entities/product.entity';
+import { ProductEntity } from 'src/products/entities/product.entity';
 import { Repository } from 'typeorm';
 import { CategoriesService } from 'src/categories/categories.service';
 import { UserEntity } from 'src/users/entities/user.entity';

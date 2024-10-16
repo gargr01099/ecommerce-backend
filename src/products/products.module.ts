@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { ProductsController } from './products.controller';
-import { ProductEntity } from './entities/product.entity';
+import { ProductsService } from 'src/products/products.service';
+import { ProductsController } from 'src/products/products.controller';
+import { ProductEntity } from 'src/products/entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from 'src/categories/categories.module';
 import { OrdersModule } from 'src/orders/orders.module';
