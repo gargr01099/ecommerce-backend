@@ -1,12 +1,11 @@
 import { Controller, Post, Get, Patch, Delete, Param, Body, UseGuards } from '@nestjs/common';
-import { CartService } from './cart.service';
-import { CartEntity } from './cart.entity';
+import { CartService } from 'src/orders/cart.service';
+import { CartEntity } from 'src/orders/cart.entity';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
-import { ProductEntity } from 'src/products/entities/product.entity';
-import { ProductsService } from '../products/products.service';
+import { ProductsService } from 'src/products/products.service';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
-import { CartItemEntity } from './cart.item.entity';    
+import { CartItemEntity } from 'src/orders/cart.item.entity';    
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';
 
@@ -38,6 +37,7 @@ export class CartController {
   @Patch(':id')
   async updateCartItemQuantity(
     @Param('id') id: number,
+
     @Body() body: { quantity: number },
   ): Promise<CartItemEntity> {
     return await this.cartService.updateCartItemQuantity(id, body.quantity);

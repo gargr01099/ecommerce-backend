@@ -1,22 +1,3 @@
-/**
- * The `OrdersService` class is responsible for managing orders in the application.
- * It provides methods for creating, retrieving, updating, and cancelling orders.
- *
- * The service interacts with the `OrderEntity`, `OrdersProductsEntity`, and `ShippingEntity`
- * entities to persist and retrieve order-related data. It also collaborates with the
- * `ProductsService` to update product stock levels when an order is delivered or cancelled.
- *
- * The `create` method is used to create a new order, including the associated shipping
- * address and ordered products. The `findAll` and `findOne` methods are used to retrieve
- * orders, with the ability to fetch related entities like the shipping address, user, and
- * ordered products.
- *
- * The `update` method is used to update the status of an order, with various business
- * rules enforced to ensure the status transitions are valid. The `cancelled` method is
- * used to cancel an order, which also updates the product stock levels.
- *
- * The `remove` method is a placeholder for a future implementation to delete an order.
- */
 import {
   Injectable,
   NotFoundException,
@@ -34,8 +15,8 @@ import { OrdersProductsEntity } from './entities/orders-products.entity';
 import { ShippingEntity } from './entities/shipping.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { ProductsService } from 'src/products/products.service';
-import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
-import { OrderStatus } from './enums/order-status.enum';
+import { UpdateOrderStatusDto } from 'src/orders/dto/update-order-status.dto';
+import { OrderStatus } from 'src/orders/enums/order-status.enum';
 
 @Injectable()
 export class OrdersService {

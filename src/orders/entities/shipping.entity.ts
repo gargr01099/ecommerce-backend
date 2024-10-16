@@ -1,5 +1,5 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { OrderEntity } from './order.entity';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 
 @Entity({ name: 'shippings' })
 export class ShippingEntity {

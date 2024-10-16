@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { CreateShippingDto } from './create-shipping.dto';
+import { CreateShippingDto } from 'src/orders/dto/create-shipping.dto';
 import { ValidateNested } from 'class-validator';
 import { OrderedProductsDto } from 'src/orders/dto/ordered-products.dto';
 

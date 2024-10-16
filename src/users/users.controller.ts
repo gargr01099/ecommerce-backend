@@ -43,12 +43,6 @@ export class UsersController {
     return { accessToken, user };
   }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    return this.usersService.create(createUserDto);
-  }
-
   @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Get('all')
   async findAll(): Promise<UserEntity[]> {
@@ -65,10 +59,6 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
 
   @UseGuards(AuthenticationGuard)
   @Get('me')
