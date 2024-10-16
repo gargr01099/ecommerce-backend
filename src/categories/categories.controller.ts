@@ -8,15 +8,15 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoriesService } from 'src/categories/categories.service';
+import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
+import { UpdateCategoryDto } from 'src/categories/dto/update-category.dto';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';
-import { CategoryEntity } from './entities/category.entity';
+import { CategoryEntity } from 'src/categories/entities/category.entity';
 
 @Controller('categories')
 export class CategoriesController {

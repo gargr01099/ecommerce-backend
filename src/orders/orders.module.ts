@@ -14,7 +14,7 @@ import { ProductsModule } from 'src/products/products.module';
       OrdersProductsEntity,
       ShippingEntity,
     ]),
-    forwardRef(() => ProductsModule),
+    forwardRef(() => ProductsModule),  //to avoid circular dependency 
   ],
   controllers: [OrdersController],
   providers: [OrdersService],
