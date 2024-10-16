@@ -9,7 +9,7 @@ import { CreateProductDto } from 'src/products/dto/create-product.dto';
 import { UpdateProductDto } from 'src/products/dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/products/entities/product.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CategoriesService } from 'src/categories/categories.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { OrderStatus } from 'src/orders/enums/order-status.enum';
@@ -19,8 +19,13 @@ import { OrdersService } from 'src/orders/orders.service';
 @Injectable()
 export class ProductsService {
   findMany(productIds: number[]) {
-    throw new Error('Method not implemented.');
-  }
+    return this.productRepository.find({
+      where: {
+        id: In(productIds),
+      },
+    }); 
+
+}
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
