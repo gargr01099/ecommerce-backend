@@ -9,10 +9,10 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
 } from 'typeorm';
-import { OrderStatus } from '../enums/order-status.enum';
+import { OrderStatus } from 'src/orders/enums/order-status.enum';
 import { UserEntity } from 'src/users/entities/user.entity';
-import { ShippingEntity } from './shipping.entity';
-import { OrdersProductsEntity } from './orders-products.entity';
+import { ShippingEntity } from 'src/orders/entities/shipping.entity';
+import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
 
 @Entity({ name: 'orders' })
 export class OrderEntity {

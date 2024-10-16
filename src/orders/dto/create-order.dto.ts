@@ -1,11 +1,7 @@
-/**
- * Data transfer object (DTO) for creating a new order.
- * Includes the shipping address and the ordered products.
- */
 import { Type } from 'class-transformer';
 import { CreateShippingDto } from './create-shipping.dto';
 import { ValidateNested } from 'class-validator';
-import { OrderedProductsDto } from './ordered-products.dto';
+import { OrderedProductsDto } from 'src/orders/dto/ordered-products.dto';
 
 export class CreateOrderDto {
   @Type(() => CreateShippingDto)
