@@ -5,14 +5,13 @@ import {
   forwardRef,
   Inject,
 } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OrderEntity } from './entities/order.entity';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 import { Repository } from 'typeorm';
-import { OrdersProductsEntity } from './entities/orders-products.entity';
-import { ShippingEntity } from './entities/shipping.entity';
+import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
+import { ShippingEntity } from 'src/orders/entities/shipping.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { ProductsService } from 'src/products/products.service';
 import { UpdateOrderStatusDto } from 'src/orders/dto/update-order-status.dto';
