@@ -18,6 +18,9 @@ import { OrdersService } from 'src/orders/orders.service';
 
 @Injectable()
 export class ProductsService {
+  findMany(productIds: number[]) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,

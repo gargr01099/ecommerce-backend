@@ -9,7 +9,7 @@ import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderEntity } from 'src/orders/entities/order.entity';
-import { Repository } from 'typeorm';
+import { Repository, FindManyOptions } from 'typeorm';
 import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
 import { ShippingEntity } from 'src/orders/entities/shipping.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
@@ -31,45 +31,29 @@ export class OrdersService {
     createOrderDto: CreateOrderDto,
     currentUser: UserEntity,
   ): Promise<OrderEntity> {
-    const shippingEntity = new ShippingEntity();
-    Object.assign(shippingEntity, createOrderDto.shippingAddress);
+    const orderEntity = await this.orderRepository.save({
+      shippingAddress: createOrderDto.shippingAddress,
+      user: currentUser,
+    });
 
-    const orderEntity = new OrderEntity();
-    orderEntity.shippingAddress = shippingEntity;
-    orderEntity.user = currentUser;
+    const productIds = createOrderDto.orderedProducts.map((op) => op.id);
+    const products = await this.productService.findMany(productIds);
 
-    const orderTbl = await this.orderRepository.save(orderEntity);
+    const opEntities = createOrderDto.orderedProducts.map((op) => ({
+      order: orderEntity,
+      product: products.find((p) => p.id === op.id),
+      product_quantity: op.product_quantity,
+      purchased: true,
+    }));
 
-    let opEntity: {
-      order: OrderEntity;
-      product: ProductEntity;
-      product_quantity: number;
-      purchased:boolean;
-    }[] = [];
-
-    for (let i = 0; i < createOrderDto.orderedProducts.length; i++) {
-      const order = orderTbl;
-      const product = await this.productService.findOne(
-        createOrderDto.orderedProducts[i].id,
-      );
-      const product_quantity =
-        createOrderDto.orderedProducts[i].product_quantity;
-      opEntity.push({
-        order,
-        product,
-        product_quantity,
-        purchased:true,
-      });
-    }
-
-    const op = await this.opRepository
+    await this.opRepository
       .createQueryBuilder()
       .insert()
       .into(OrdersProductsEntity)
-      .values(opEntity)
+      .values(opEntities)
       .execute();
 
-    return await this.findOne(orderTbl.id);
+    return this.findOne(orderEntity.id);
   }
 
   async findAll(): Promise<OrderEntity[]> {
@@ -91,15 +75,15 @@ export class OrdersService {
         products: { product: true },
       },
     });
-    if(!order) throw new NotFoundException('Order not found');
+    if (!order) throw new NotFoundException('Order not found');
     return {
       ...order,
       products: order.products.map((op) => ({
         id: op.id,
-        order: op.order, 
+        order: op.order,
         product_quantity: op.product_quantity,
         product: op.product,
-        purchased: op.purchased, 
+        purchased: op.purchased,
       })),
     };
   }
@@ -168,7 +152,6 @@ export class OrdersService {
   remove(id: number) {
     return `This action removes a #${id} order`;
   }
-  
 
   async stockUpdate(order: OrderEntity, status: string) {
     for (const op of order.products) {
