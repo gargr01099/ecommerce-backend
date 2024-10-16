@@ -8,8 +8,10 @@ import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
 import { CartItemEntity } from 'src/orders/cart.item.entity';    
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cart')
+@ApiTags('cart')  
 @UseGuards(AuthenticationGuard)
 export class CartController {
   constructor(
@@ -17,8 +19,8 @@ export class CartController {
     private readonly productService: ProductsService, 
   ) {}
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Post()
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   async addToCart(
     @CurrentUser() user: UserEntity,
     @Body() body: { productId: number; quantity: number },
@@ -33,8 +35,8 @@ export class CartController {
     return await this.cartService.getCartItems(user);
   }
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Patch(':id')
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   async updateCartItemQuantity(
     @Param('id') id: number,
 
@@ -43,14 +45,14 @@ export class CartController {
     return await this.cartService.updateCartItemQuantity(id, body.quantity);
   }
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Delete(':id')
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   async removeFromCart(@Param('id') id: number): Promise<void> {
     return await this.cartService.removeFromCart(id);
   }
 
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   @Delete('clear')
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   async clearCart(@CurrentUser() user: UserEntity): Promise<void> {
     return await this.cartService.clearCart(user);
   }

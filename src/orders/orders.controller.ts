@@ -18,7 +18,9 @@ import { OrderEntity } from 'src/orders/entities/order.entity';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';
 import { UpdateOrderStatusDto } from 'src/orders/dto/update-order-status.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
