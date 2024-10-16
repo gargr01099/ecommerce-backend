@@ -8,13 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { ReviewsService } from './reviews.service';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import { ReviewsService } from 'src/reviews/reviews.service';
+import { CreateReviewDto } from 'src/reviews/dto/create-review.dto';
+import { UpdateReviewDto } from 'src/reviews/dto/update-review.dto';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
-import { ReviewEntity } from './entities/review.entity';
+import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { Roles } from 'src/utility/common/user-roles.enum';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 

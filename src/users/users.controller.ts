@@ -8,12 +8,11 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserSignUpDto } from './dto/user-signup.dto';
-import { UserEntity } from './entities/user.entity';
-import { UserSignInDto } from './dto/user-signin.dto';
+import { UsersService } from 'src/users/users.service';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
+import { UserSignUpDto } from 'src/users/dto/user-signup.dto';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { UserSignInDto } from 'src/users/dto/user-signin.dto';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';

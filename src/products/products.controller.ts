@@ -23,7 +23,7 @@ import {
   SerializeIncludes,
   SerializeInterceptor,
 } from 'src/utility/interceptors/serialize.interceptor';
-import { ProductsDto } from './dto/products.dto';
+import { ProductsDto } from 'src/products/dto/products.dto';
 
 @Controller('products')
 export class ProductsController {

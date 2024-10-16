@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength,IsIn } from "class-validator";
-import { UserSignInDto } from "./user-signin.dto";
+import { UserSignInDto } from "src/users/dto/user-signin.dto";
 
 export class UserSignUpDto extends UserSignInDto{
     @IsNotEmpty({message:'Name can not be null'})
