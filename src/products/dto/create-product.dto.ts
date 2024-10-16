@@ -29,10 +29,4 @@ export class CreateProductDto {
   @IsNumber({}, { message: 'stock should be number' })
   @Min(0, { message: 'stock can not be negative.' })
   stock: number;
-
-
-  // @IsOptional()
-  // @IsArray({ message: 'images should be in array format.' })
-  // images: string[];
-
 }

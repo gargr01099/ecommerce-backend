@@ -8,10 +8,10 @@ export class CartItemEntity {
   id: number;
 
   @ManyToOne(() => CartEntity, (cart) => cart.items, { onDelete: 'CASCADE' })
-  cart: CartEntity; // Many items belong to one cart
+  cart: CartEntity; 
 
   @ManyToOne(() => ProductEntity)
-  product: ProductEntity; // Each item is associated with one product
+  product: ProductEntity; 
 
   @Column()
   quantity: number;

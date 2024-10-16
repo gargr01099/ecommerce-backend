@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength,IsIn } from "class-validator";
 import { UserSignInDto } from "./user-signin.dto";
-import {Roles} from "../../utility/common/user-roles.enum"; 
 
 export class UserSignUpDto extends UserSignInDto{
     @IsNotEmpty({message:'Name can not be null'})
@@ -17,5 +16,5 @@ export class UserSignUpDto extends UserSignInDto{
 
     @IsNotEmpty({ message: 'Role cannot be null' })
     @IsIn(['user', 'admin'], { message: 'Role must be either user or admin' })
-    role: 'user' | 'admin'; // Change to a single string representing the role
+    role: 'user' | 'admin';
 }

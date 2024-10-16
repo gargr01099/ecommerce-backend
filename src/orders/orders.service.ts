@@ -116,11 +116,10 @@ export class OrdersService {
       ...order,
       products: order.products.map((op) => ({
         id: op.id,
-        // product_unit_price: op.product_unit_price,
         order: op.order, 
         product_quantity: op.product_quantity,
         product: op.product,
-        purchased: op.purchased, // Include the purchased field here
+        purchased: op.purchased, 
       })),
     };
   }

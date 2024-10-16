@@ -32,10 +32,6 @@ export class ProductEntity {
   @Column()
   stock: number;
 
-  // @IsOptional()
-  // @Column('simple-array')
-  // images: string[];
-
   @CreateDateColumn()
   createdAt: Timestamp;
 
@@ -54,7 +50,6 @@ export class ProductEntity {
   @OneToMany(() => OrdersProductsEntity, (op) => op.product)
   products: OrdersProductsEntity[];
 
-  @OneToMany(() => CartEntity, (cart) => cart.product) // Optional: define if needed
-  carts: CartEntity[]; // This will represent how many carts include this product
-
+  @OneToMany(() => CartEntity, (cart) => cart.product)
+  carts: CartEntity[]; 
 }

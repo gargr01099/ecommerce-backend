@@ -22,9 +22,6 @@ export class ProductList {
   price: number;
   @Expose({ name: 'product_stock' })
   stock: number;
-  // @Expose({ name: 'product_images' })
-  // @Transform(({ value }) => value.toString().split(','))
-  // images: string[];
 
   @Transform(({ obj }) => {
     return {

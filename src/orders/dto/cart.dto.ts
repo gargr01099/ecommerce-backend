@@ -1,4 +1,3 @@
-// src/orders/dto/cart.dto.ts
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CartDto {
@@ -8,5 +7,5 @@ export class CartDto {
 
   @IsNotEmpty()
   @IsNumber()
-  quantity: number; // The quantity of the product to add to the cart
+  quantity: number;
 }

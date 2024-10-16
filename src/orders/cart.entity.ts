@@ -8,7 +8,7 @@ export class CartEntity {
   id: number;
   
   @OneToMany(() => CartItemEntity, (item) => item.cart, { cascade: true })
-  items: CartItemEntity[]; // Establish a one-to-many relationship with CartItem
+  items: CartItemEntity[];
 
   @ManyToOne(() => UserEntity, (user) => user.carts)
   user: UserEntity;

@@ -4,7 +4,7 @@ import { CartEntity } from './cart.entity';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
-import { ProductsService } from '../products/products.service'; // Import the ProductService
+import { ProductsService } from '../products/products.service';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
 import { CartItemEntity } from './cart.item.entity';    
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
@@ -15,7 +15,7 @@ import { Roles } from 'src/utility/common/user-roles.enum';
 export class CartController {
   constructor(
     private readonly cartService: CartService,
-    private readonly productService: ProductsService, // Inject ProductService here
+    private readonly productService: ProductsService, 
   ) {}
 
   @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
@@ -24,7 +24,7 @@ export class CartController {
     @CurrentUser() user: UserEntity,
     @Body() body: { productId: number; quantity: number },
   ): Promise<CartEntity> {
-    const product = await this.productService.findOne(body.productId); // Use injected product service
+    const product = await this.productService.findOne(body.productId); 
     console.log(product);
     return await this.cartService.addProductToCart(user, product, body.quantity);
   }
