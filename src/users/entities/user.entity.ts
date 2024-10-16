@@ -3,6 +3,7 @@ import { OrderEntity } from 'src/orders/entities/order.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { Roles } from 'src/utility/common/user-roles.enum';
+import { CartEntity } from 'src/orders/cart.entity';
 import {
   Column,
   CreateDateColumn,
@@ -52,4 +53,6 @@ export class UserEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+  @OneToMany(() => CartEntity, (cart) => cart.user) // Add this line to relate carts to users
+  carts: CartEntity[]; // This defines a one-to-many relationship with CartEntity
 }

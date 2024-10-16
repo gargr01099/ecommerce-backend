@@ -3,6 +3,7 @@ import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { CartEntity } from 'src/orders/cart.entity';
 import {
   Column,
   CreateDateColumn,
@@ -52,5 +53,8 @@ export class ProductEntity {
 
   @OneToMany(() => OrdersProductsEntity, (op) => op.product)
   products: OrdersProductsEntity[];
+
+  @OneToMany(() => CartEntity, (cart) => cart.product) // Optional: define if needed
+  carts: CartEntity[]; // This will represent how many carts include this product
 
 }
