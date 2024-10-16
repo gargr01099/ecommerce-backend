@@ -1,12 +1,9 @@
 import {
   CanActivate,
   ExecutionContext,
-  Injectable,
   UnauthorizedException,
   mixin,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-
 export const AuthorizeGuard = (allowedRoles: string[]) => {
   class RolesGuardMixin implements CanActivate {
     canActivate(context: ExecutionContext): boolean {

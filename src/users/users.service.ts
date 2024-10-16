@@ -3,14 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { UserSignUpDto } from './dto/user-signup.dto';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { UserSignUpDto } from 'src/users/dto/user-signup.dto';
 import { hash, compare } from 'bcrypt';
-import { UserSignInDto } from './dto/user-signin.dto';
+import { UserSignInDto } from 'src/users/dto/user-signin.dto';
 import { sign } from 'jsonwebtoken';
 
 @Injectable()
@@ -52,24 +52,37 @@ export class UsersService {
     }
   }
 
-  async signin(userSignInDto: UserSignInDto): Promise<UserEntity> {
-    const userExists = await this.usersRepository
+  async verifyEmail(email: string): Promise<UserEntity> {
+    const user = await this.usersRepository
       .createQueryBuilder('users')
       .addSelect('users.password')
-      .where('users.email=:email', { email: userSignInDto.email })
+      .where('users.email = :email', { email })
       .getOne();
-    if (!userExists) throw new BadRequestException('Bad creadentials.');
-    const matchPassword = await compare(
-      userSignInDto.password,
-      userExists.password,
-    );
-    if (!matchPassword) throw new BadRequestException('Bad creadentials.');
-    delete userExists.password;
-    return userExists;
+
+    if (!user) {
+      throw new BadRequestException('Invalid email address.');
+    }
+    return user;
+  }
+  async verifyPassword(
+    providedPassword: string,
+    storedPassword: string,
+  ): Promise<void> {
+    const isMatch = await compare(providedPassword, storedPassword);
+
+    if (!isMatch) {
+      throw new BadRequestException('Invalid password.');
+    }
   }
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async signin(userSignInDto: UserSignInDto): Promise<UserEntity> {
+    const user = await this.verifyEmail(userSignInDto.email);
+
+    await this.verifyPassword(userSignInDto.password, user.password);
+
+    delete user.password;
+
+    return user;
   }
 
   async findAll(): Promise<UserEntity[]> {
@@ -91,10 +104,6 @@ export class UsersService {
     Object.assign(user, updateUserDto);
 
     return this.usersRepository.save(user);
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
   }
 
   async findUserByEmail(email: string) {
