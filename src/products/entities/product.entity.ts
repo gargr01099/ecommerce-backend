@@ -1,4 +1,3 @@
-import { IsOptional } from 'class-validator';
 import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
