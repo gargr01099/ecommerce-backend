@@ -2,7 +2,7 @@ import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { OrderEntity } from 'src/orders/entities/order.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
-import { CartEntity } from 'src/orders/cart.entity';
+import { CartEntity } from 'src/cart/entities/cart.entity';
 import {
   Column,
   CreateDateColumn,
