@@ -12,7 +12,11 @@ export class CartService {
     private readonly cartRepository: Repository<CartEntity>,
   ) {}
 
-  async addToCart(user: UserEntity, product: ProductEntity, quantity: number): Promise<CartEntity> {
+  async addToCart(
+    user: UserEntity,
+    product: ProductEntity,
+    quantity: number,
+  ): Promise<CartEntity> {
     const existingCartItem = await this.cartRepository.findOne({
       where: { user: { id: user.id }, product: { id: product.id } },
     });
@@ -28,12 +32,17 @@ export class CartService {
   async getCartItems(user: UserEntity): Promise<CartEntity[]> {
     return await this.cartRepository.find({
       where: { user: { id: user.id } },
-      relations: ['product'], 
+      relations: ['product'],
     });
   }
 
-  async updateCartItemQuantity(cartItemId: number, quantity: number): Promise<CartEntity> {
-    const cartItem = await this.cartRepository.findOne({ where: { id: cartItemId } });
+  async updateCartItemQuantity(
+    cartItemId: number,
+    quantity: number,
+  ): Promise<CartEntity> {
+    const cartItem = await this.cartRepository.findOne({
+      where: { id: cartItemId },
+    });
 
     if (!cartItem) throw new NotFoundException('Cart item not found');
 
@@ -42,7 +51,9 @@ export class CartService {
   }
 
   async removeFromCart(cartItemId: number): Promise<void> {
-    const cartItem = await this.cartRepository.findOne({ where: { id: cartItemId } });
+    const cartItem = await this.cartRepository.findOne({
+      where: { id: cartItemId },
+    });
 
     if (!cartItem) throw new NotFoundException('Cart item not found');
 

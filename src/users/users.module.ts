@@ -11,7 +11,7 @@ import { UserEntity } from 'src/users/entities/user.entity';
   exports: [UsersService],
 })
 export class UsersModule {
-  constructor(){
-    console.log('UsersModule')
+  constructor() {
+    console.log('UsersModule');
   }
 }

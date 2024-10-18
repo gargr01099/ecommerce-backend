@@ -23,9 +23,8 @@ export class ProductsService {
       where: {
         id: In(productIds),
       },
-    }); 
-
-}
+    });
+  }
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,

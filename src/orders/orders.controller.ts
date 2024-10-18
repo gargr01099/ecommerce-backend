@@ -26,7 +26,7 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER])) 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   async create(
     @Body() createOrderDto: CreateOrderDto,
     @CurrentUser() currentUser: UserEntity,
@@ -68,7 +68,7 @@ export class OrdersController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER])) 
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.USER]))
   remove(@Param('id') id: string) {
     return this.ordersService.remove(+id);
   }

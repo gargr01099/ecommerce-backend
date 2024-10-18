@@ -50,5 +50,5 @@ export class ProductEntity {
   products: OrdersProductsEntity[];
 
   @OneToMany(() => CartEntity, (cart) => cart.product)
-  carts: CartEntity[]; 
+  carts: CartEntity[];
 }

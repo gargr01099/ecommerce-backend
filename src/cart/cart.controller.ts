@@ -1,22 +1,31 @@
-import { Controller, Post, Get, Patch, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { CartService } from 'src/cart/cart.service';
 import { CartEntity } from 'src/cart/entities/cart.entity';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { ProductsService } from 'src/products/products.service';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guard';
-import { CartItemEntity } from 'src/cart/entities/cart.item.entity';    
+import { CartItemEntity } from 'src/cart/entities/cart.item.entity';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { Roles } from 'src/utility/common/user-roles.enum';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cart')
-@ApiTags('cart')  
+@ApiTags('cart')
 @UseGuards(AuthenticationGuard)
 export class CartController {
   constructor(
     private readonly cartService: CartService,
-    private readonly productService: ProductsService, 
+    private readonly productService: ProductsService,
   ) {}
 
   @Post()
@@ -25,13 +34,19 @@ export class CartController {
     @CurrentUser() user: UserEntity,
     @Body() body: { productId: number; quantity: number },
   ): Promise<CartEntity> {
-    const product = await this.productService.findOne(body.productId); 
+    const product = await this.productService.findOne(body.productId);
     console.log(product);
-    return await this.cartService.addProductToCart(user, product, body.quantity);
+    return await this.cartService.addProductToCart(
+      user,
+      product,
+      body.quantity,
+    );
   }
 
   @Get()
-  async getCartItems(@CurrentUser() user: UserEntity): Promise<CartItemEntity[]> {
+  async getCartItems(
+    @CurrentUser() user: UserEntity,
+  ): Promise<CartItemEntity[]> {
     return await this.cartService.getCartItems(user);
   }
 

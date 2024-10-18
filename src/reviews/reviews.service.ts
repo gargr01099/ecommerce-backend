@@ -18,7 +18,7 @@ export class ReviewsService {
     createReviewDto: CreateReviewDto,
     currentUser: UserEntity,
   ): Promise<ReviewEntity> {
-      console.log('Current User:', currentUser);
+    console.log('Current User:', currentUser);
     const product = await this.productService.findOne(
       createReviewDto.productId,
     );

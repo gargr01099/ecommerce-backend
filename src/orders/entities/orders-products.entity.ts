@@ -15,6 +15,6 @@ export class OrdersProductsEntity {
 
   @ManyToOne(() => ProductEntity, (prod) => prod.products, { cascade: true })
   product: ProductEntity;
-  @Column({ default: false }) 
+  @Column({ default: false })
   purchased: boolean;
 }

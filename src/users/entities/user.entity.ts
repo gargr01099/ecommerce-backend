@@ -25,8 +25,8 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
-  role: 'user' | 'admin'; 
-  
+  role: 'user' | 'admin';
+
   @Column({ nullable: true })
   address?: string;
 
@@ -53,5 +53,5 @@ export class UserEntity {
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
   @OneToMany(() => CartEntity, (cart) => cart.user)
-  carts: CartEntity[]; 
+  carts: CartEntity[];
 }
