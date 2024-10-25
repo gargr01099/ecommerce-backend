@@ -15,6 +15,9 @@ export class CartEntity {
 
   //cascade true means when we delete a cart, it will delete all the items in the cart
   //when we update a cart, any changes to its cart items will be reflected in the database
+  //assuming cart entity is the parent and cartitementity representing items in the cart..
+  // item=>item.cart specifies that each cartitementity has a property cart that refers to the cart entity, establishing the inverse relation
+  //{ cascade: true } ensures that all operations performed on the Cart (parent) entity will cascade down to the related CartItemEntity instances.
 
   @OneToMany(() => CartItemEntity, (item) => item.cart, { cascade: true })
   items: CartItemEntity[];
@@ -34,4 +37,3 @@ export class CartEntity {
 //@OneToMany cannot exist without @ManyToOne
 //If you want to use @OneToMany, @ManyToOne is required. However, the inverse is not required: If you only care about the @ManyToOne relationship, you can define it without having @OneToMany on the related entity. Where you set @ManyToOne - its related entity will have "relation id" and foreign key.
 //With cascades enabled you can save this relation with only one save call.
-
