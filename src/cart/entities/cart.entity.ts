@@ -19,6 +19,7 @@ export class CartEntity {
   @OneToMany(() => CartItemEntity, (item) => item.cart, { cascade: true })
   items: CartItemEntity[];
 
+  //user can have multiple carts...
   @ManyToOne(() => UserEntity, (user) => user.carts)
   user: UserEntity;
 
@@ -28,3 +29,9 @@ export class CartEntity {
   @Column()
   quantity: number;
 }
+
+//You can omit @JoinColumn in a @ManyToOne / @OneToMany relation.
+//@OneToMany cannot exist without @ManyToOne
+//If you want to use @OneToMany, @ManyToOne is required. However, the inverse is not required: If you only care about the @ManyToOne relationship, you can define it without having @OneToMany on the related entity. Where you set @ManyToOne - its related entity will have "relation id" and foreign key.
+//With cascades enabled you can save this relation with only one save call.
+
