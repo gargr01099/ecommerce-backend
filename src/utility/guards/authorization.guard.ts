@@ -21,7 +21,10 @@ export const AuthorizeGuard = (allowedRoles: string[]) => {
       throw new UnauthorizedException('Sorry, you are not authorized.');
     }
   }
-
+//mixin is a way to share code between classes in nest..
+//it is a class that can be used by another class.
+//mixins are used to add functionality to a class without modifying the original class.
+//
   const guard = mixin(RolesGuardMixin);
   return guard;
 };
